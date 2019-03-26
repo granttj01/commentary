@@ -10,6 +10,7 @@ import React from 'react';
 import { Component } from 'react';
 import { StyleSheet,  View, Alert, SafeAreaView } from 'react-native';
 import LiveCommentary from "./LiveCommentary";
+import KeyMoments from "./KeyMoments";
 
 enum KeyMoment {
   Second = "Second Half",
@@ -47,10 +48,17 @@ export default class App extends Component<Props, State> {
   }
 
   render() {
+    const { moments } = this.state;
+    let keyMoments: Moment[] = [];
+    if (moments.length > 0) {
+      keyMoments = moments.filter((moment: Moment) => moment.hasOwnProperty('keyMoment'))
+    }
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-          <LiveCommentary moments={this.state.moments} />
+          <LiveCommentary moments={moments} />
+          <KeyMoments moments={keyMoments} />
         </View>
       </SafeAreaView>
     );
