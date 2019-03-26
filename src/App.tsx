@@ -8,7 +8,8 @@
 
 import React from 'react';
 import { Component } from 'react';
-import { StyleSheet,  View, Alert } from 'react-native';
+import { StyleSheet,  View, Alert, SafeAreaView } from 'react-native';
+import LiveCommentary from "./LiveCommentary";
 
 enum KeyMoment {
   Second = "Second Half",
@@ -19,7 +20,7 @@ enum KeyMoment {
   Full = "Full Time"
 }
 
-interface Moment {
+export interface Moment {
   id: number,
   minute: number,
   comment: string,
@@ -47,9 +48,11 @@ export default class App extends Component<Props, State> {
 
   render() {
     return (
-      <View style={styles.container}>
-
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          <LiveCommentary moments={this.state.moments} />
+        </View>
+      </SafeAreaView>
     );
   }
 }
