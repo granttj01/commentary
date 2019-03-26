@@ -1,8 +1,9 @@
 import React from 'react';
 import { Component } from 'react';
-import { View, StyleSheet, FlatList, Text } from 'react-native'
+import {View, StyleSheet, FlatList, Text, TouchableOpacity, Dimensions} from 'react-native'
 import { Moment } from "./App";
 import Header from './components/Header'
+import Collapsible from "react-native-collapsible";
 
 interface Props {
     moments: Moment[]
@@ -13,17 +14,27 @@ interface ItemProps {
 }
 
 export default class KeyMoments extends Component<Props> {
+    state = {
+        isCollapsed: true
+    };
+
+    toggleCollapse = () => this.setState({isCollapsed: !this.state.isCollapsed});
+
     render() {
         return (
             <View style={styles.container}>
-                <Header title='Key moments' />
-                <FlatList
-                    style={styles.commentaryList}
-                    data={this.props.moments}
-                    renderItem={this.renderItem}
-                    keyExtractor={this.keyExtractor}
-                    initialNumToRender={10}
-                />
+                <TouchableOpacity onPress={this.toggleCollapse}>
+                    <Header title='Key moments' />
+                </TouchableOpacity>
+                <Collapsible collapsed={this.state.isCollapsed}>
+                        <FlatList
+                            style={styles.commentaryList}
+                            data={this.props.moments}
+                            renderItem={this.renderItem}
+                            keyExtractor={this.keyExtractor}
+                            initialNumToRender={10}
+                        />
+                </Collapsible>
             </View>
         )
     }
@@ -52,6 +63,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch'
     },
     commentaryList: {
+        maxHeight: 150,
+        width: Dimensions.get('window').width,
         paddingHorizontal: 20,
         marginTop: 10,
         alignSelf: 'stretch'
