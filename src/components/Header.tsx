@@ -9,11 +9,11 @@ interface Props {
 
 export default ({ title, left, right }: Props) => (
     <View style={styles.container}>
-        <View>
+        <View style={styles.leftSection}>
             {left && left()}
         </View>
         <Text style={styles.header}>{title}</Text>
-        <View>
+        <View style={styles.rightSection}>
             {right && right()}
         </View>
     </View>
@@ -29,5 +29,13 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 20
+    },
+    rightSection: {
+        flex: 1,
+        alignItems: 'flex-end'
+    },
+    leftSection: {
+        flex: 1,
+        alignItems: 'flex-start'
     }
 });
