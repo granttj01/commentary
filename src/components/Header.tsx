@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         height: 50
     },
     header: {
-        fontSize: 20
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     rightSection: {
         flex: 1,
