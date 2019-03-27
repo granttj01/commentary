@@ -4,6 +4,7 @@ import {View, StyleSheet, FlatList, Text, TouchableOpacity, Dimensions} from 're
 import { Moment } from "./App";
 import Header from './components/Header'
 import Collapsible from "react-native-collapsible";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
     moments: Moment[],
@@ -24,9 +25,10 @@ export default class KeyMoments extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={this.toggleCollapse}>
-                    <Header title='Key moments' />
-                </TouchableOpacity>
+                <Header
+                    title='Key moments'
+                    right={this.renderHeaderRight}
+                />
                 <Collapsible collapsed={this.state.isCollapsed}>
                         <FlatList
                             style={styles.commentaryList}
@@ -39,6 +41,12 @@ export default class KeyMoments extends Component<Props> {
             </View>
         )
     }
+
+    renderHeaderRight = () => (
+        <TouchableOpacity onPress={this.toggleCollapse} style={styles.iconContainer}>
+            <Icon name={this.state.isCollapsed ? 'chevron-up' : 'chevron-down'} />
+        </TouchableOpacity>
+    );
 
     renderItem = ({item}: ItemProps) => {
         return (
@@ -83,5 +91,11 @@ const styles = StyleSheet.create({
     },
     descriptionContainer: {
         flex: 4
+    },
+    iconContainer: {
+        borderWidth: 1,
+        borderRadius: 20,
+        padding: 5,
+        marginRight: 10
     }
 });
