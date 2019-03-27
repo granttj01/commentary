@@ -35,8 +35,11 @@ interface State {
 }
 
 export default class App extends Component<Props, State> {
+  private liveCommentaryRef = React.createRef<any>();
+
   state = {
-    moments: []
+    moments: [],
+    selectedMoment: null
   };
 
   componentDidMount(): void {
@@ -46,6 +49,10 @@ export default class App extends Component<Props, State> {
           this.setState({ moments })
         }).catch(() => Alert.alert('Fetching commentary failed!'))
   }
+
+  handleSelectKeyMoment = (moment: Moment) => {
+    this.liveCommentaryRef.current.scrollToEvent(moment)
+  };
 
   render() {
     const { moments } = this.state;
@@ -57,8 +64,11 @@ export default class App extends Component<Props, State> {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-          <LiveCommentary moments={moments} />
-          <KeyMoments moments={keyMoments} />
+          <LiveCommentary
+              moments={moments}
+              ref={this.liveCommentaryRef}
+          />
+          <KeyMoments moments={keyMoments} handleSelectKeyMoment={this.handleSelectKeyMoment} />
         </View>
       </SafeAreaView>
     );

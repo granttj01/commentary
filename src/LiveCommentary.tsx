@@ -13,18 +13,31 @@ interface ItemProps {
 }
 
 export default class LiveCommentary extends Component<Props> {
+    state = {
+        selected: null
+    };
+
+    private timeline = React.createRef<any>();
+
+    scrollToEvent = (item: Moment) => {
+        this.setState({selected: item.id});
+        this.timeline.current.scrollToItem({item, viewPosition: 0.5})
+    };
+
     render() {
         return (
             <View style={styles.container}>
-                {/* live commentary title here */}
                 <Header title='Live commentary' />
-                {/* comment timeline here */}
                 <FlatList
+                    ref={this.timeline}
                     style={styles.commentaryList}
                     data={this.props.moments}
                     renderItem={this.renderItem}
                     keyExtractor={this.keyExtractor}
                     initialNumToRender={10}
+                    getItemLayout={(data, index) => (
+                        {length: 100, offset: 100 * index, index}
+                    )}
                 />
             </View>
         )
@@ -32,7 +45,10 @@ export default class LiveCommentary extends Component<Props> {
 
     renderItem = ({item}: ItemProps) => {
         return (
-            <View style={styles.momentContainer}><Text>{item.comment}</Text></View>
+          <View style={styles.itemContainer}>
+              <View style={[styles.momentContainer, this.state.selected === item.id ? { backgroundColor: '#ccff00' } : {}]}><Text>{item.comment}</Text></View>
+          </View>
+
         )
 
     };
@@ -49,8 +65,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginTop: 10
     },
+    itemContainer: {
+        height: 100,
+        justifyContent: 'center'
+    },
     momentContainer: {
-        marginBottom: 20,
+        marginVertical: 10,
         paddingHorizontal: 5,
         paddingVertical: 10,
         backgroundColor: "#BBDAFF",

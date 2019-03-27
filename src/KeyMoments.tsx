@@ -6,7 +6,8 @@ import Header from './components/Header'
 import Collapsible from "react-native-collapsible";
 
 interface Props {
-    moments: Moment[]
+    moments: Moment[],
+    handleSelectKeyMoment: any
 }
 
 interface ItemProps {
@@ -41,14 +42,17 @@ export default class KeyMoments extends Component<Props> {
 
     renderItem = ({item}: ItemProps) => {
         return (
-            <View style={styles.keyMomentContainer}>
-                <View style={styles.timeContainer}>
-                    <Text>{item.minute}'</Text>
+            <TouchableOpacity onPress={() => this.props.handleSelectKeyMoment(item)}>
+                <View style={styles.keyMomentContainer}>
+                    <View style={styles.timeContainer}>
+                        <Text>{item.minute}'</Text>
+                    </View>
+                    <View style={styles.descriptionContainer}>
+                        <Text>{item.keyMoment}</Text>
+                    </View>
                 </View>
-                <View style={styles.descriptionContainer}>
-                    <Text>{item.keyMoment}</Text>
-                </View>
-            </View>
+            </TouchableOpacity>
+
         )
     };
 
