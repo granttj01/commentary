@@ -8,9 +8,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@types/react-native-vector-icons": "^4.6.4",
     "react": "16.8.3",
     "react-native": "0.59.1",
-    "react-native-collapsible": "^1.4.0"
+    "react-native-collapsible": "^1.4.0",
+    "react-native-vector-icons": "^6.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
